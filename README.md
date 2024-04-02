@@ -19,7 +19,7 @@ Objects are cached using the Add(key, value) method. This method returns nullabl
     }
 ```
 **Retrieving a cached object:**
-Cached objects are retrieved using the Get(key) method. This method returns a bool indicating the success of retrieving the cached object. The cached object is returned in an out parameter. If the object was not found in the cache, this out paramater will contian the default value for that type.
+Cached objects are retrieved using the Get(key) method. This method returns a bool indicating if the retrieval was successful. The cached object is returned in an out parameter. If the object was not found in the cache, this out paramater will contian the default value for that type.
 ```
     if (cache.Get(1, out string value))
     {
