@@ -1,4 +1,7 @@
-﻿namespace Caching.InMemoryCache
+﻿using System.Collections.Generic;
+using System.Data;
+
+namespace Caching.InMemoryCache
 {
     /// <summary>
     /// Least recently used in-memory cache implementation.
@@ -27,14 +30,14 @@
         private static InMemoryCache<TValue>? instance = null;
 
         /// <summary>
-        /// Dictionary containing the cached items keys and linked list nodes.
+        /// Dictionary containing the cached items keys and linked list nodes containing the key and value.
         /// </summary>
-        private readonly Dictionary<int, LinkedListNode<(int key, TValue value)>> map = new();
+        private readonly Dictionary<int, (LinkedListNode<int> key, TValue value)> cache = new();
 
         /// <summary>
-        /// Linked list with each node containing the cached items key and value.
+        /// Linked list with each node containing the cached items key.
         /// </summary>
-        private readonly LinkedList<(int key, TValue value)> cache = new();
+        private readonly LinkedList<int> ordered = new();
 
         /// <summary>
         /// Creates a private instance of the InMemoryCache class.
@@ -76,11 +79,11 @@
         {
             lock (cacheLock)
             {
-                if (map.TryGetValue(key, out var node))
+                if (cache.TryGetValue(key, out var cachedValue))
                 {
-                    cache.Remove(node);
-                    cache.AddLast(node);
-                    value = node.Value.value;
+                    ordered.Remove(cachedValue.key);
+                    ordered.AddLast(cachedValue.key);
+                    value = cachedValue.value;
                     return true;
                 }
                 else
@@ -104,22 +107,22 @@
 
             lock (cacheLock)
             { 
-                if (map.TryGetValue(key, out var node))
+                if (cache.TryGetValue(key, out var cachedValue))
                 {
-                    node.Value = (key, value);
-                    cache.Remove(node);
-                    cache.AddLast(node);
+                    cache[key] = (cachedValue.key, value);
+                    ordered.Remove(cachedValue.key);
+                    ordered.AddLast(cachedValue.key);
                 }
                 else
                 {
-                    cache.AddLast((key, value));
-                    map.Add(key, cache.Last!);
+                    ordered.AddLast(key);
+                    cache.Add(key, (ordered.Last!,  value));                   
                 }
-                if (map.Count > _maxCachedItems)
+                if (cache.Count > _maxCachedItems)
                 {
-                    evictee = cache.First!.Value.key;
-                    map.Remove(cache.First!.Value.key);
-                    cache.RemoveFirst();
+                    evictee = ordered.First!.Value;
+                    cache.Remove(ordered.First!.Value);
+                    ordered.RemoveFirst();
                 }
             }
         }
