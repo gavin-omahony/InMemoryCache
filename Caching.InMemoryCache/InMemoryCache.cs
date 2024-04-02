@@ -27,7 +27,7 @@
         private static InMemoryCache<TValue>? instance = null;
 
         /// <summary>
-        /// Dictionary containing the cached items keys and linked list nodes containing the key and value.
+        /// Dictionary containing the cached items keys and a tuple (LinkedListNode key, value)
         /// </summary>
         private readonly Dictionary<int, (LinkedListNode<int> key, TValue value)> cache = new();
 
@@ -119,7 +119,7 @@
                 {
                     evictee = ordered.First!.Value;
                     cache.Remove(ordered.First!.Value);
-                    ordered.RemoveFirst();
+                    ordered.RemoveFirst(); 
                 }
             }
         }
