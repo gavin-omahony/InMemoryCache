@@ -58,7 +58,7 @@
 
             lock (instanceLock) 
             { 
-                if (instance == null || maxCachedItems != instance._maxCachedItems)
+                if (instance == null || maxCachedItems != instance._maxCachedItems || typeof(TValue) != instance.GetType().GenericTypeArguments[0])
                 {
                     instance = new InMemoryCache<TValue>(maxCachedItems);
                 }
@@ -81,6 +81,7 @@
                     cache.Remove(node);
                     cache.AddLast(node);
                     value = node.Value.value;
+                    return true;
                 }
                 else
                 {

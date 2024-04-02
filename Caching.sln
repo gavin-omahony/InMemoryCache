@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caching.InMemoryCache", "Caching.MemoryCache\Caching.InMemoryCache.csproj", "{7CE9D85B-B6B2-4439-A46E-7BFED5B72E10}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cachine.InMemoryCacheTests", "Cachine.InMemoryCacheTests\Cachine.InMemoryCacheTests.csproj", "{E6CF068C-EF94-441A-87F4-A28C5232A742}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caching.InMemoryCacheTests", "Caching.InMemoryCacheTests\Caching.InMemoryCacheTests.csproj", "{E6CF068C-EF94-441A-87F4-A28C5232A742}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
