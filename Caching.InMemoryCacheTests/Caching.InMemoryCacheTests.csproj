@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Caching.InMemoryCache\Caching.InMemoryCache.csproj" />
-    <ProjectReference Include="..\Caching.MemoryCache\Caching.InMemoryCache.csproj" />
   </ItemGroup>
 
   <ItemGroup>
