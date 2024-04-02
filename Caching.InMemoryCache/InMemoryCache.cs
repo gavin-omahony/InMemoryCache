@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-
-namespace Caching.InMemoryCache
+﻿namespace Caching.InMemoryCache
 {
     /// <summary>
     /// Least recently used in-memory cache implementation.
