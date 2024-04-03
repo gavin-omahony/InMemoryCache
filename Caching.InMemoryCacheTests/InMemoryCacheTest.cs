@@ -1,4 +1,6 @@
 using Caching.InMemoryCache;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics.Metrics;
 
 namespace Caching.InMemoryCacheTest
 {
@@ -78,6 +80,24 @@ namespace Caching.InMemoryCacheTest
                     Assert.AreEqual(i.ToString(), value);
                 }
             });
+        }
+
+        [TestMethod]
+        public void Test_Parallel_Instantiation()
+        {
+            var cacheArray = new InMemoryCache<string>[15];
+
+            Parallel.For(1, 15, f =>
+            {
+                cacheArray[f] = InMemoryCache<string>.CreateCache(1000);
+                cacheArray[f].Add(f, f.ToString(), out int? evictee);
+            });
+
+            for (int i = 1; i < 15; i++)
+            {
+                cacheArray[10].Get(i, out string? value);
+                Assert.AreEqual(i.ToString(), value);
+            }
         }
     }
 }
