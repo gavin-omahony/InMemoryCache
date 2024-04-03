@@ -1,6 +1,4 @@
 using Caching.InMemoryCache;
-using Newtonsoft.Json.Linq;
-using System.Diagnostics.Metrics;
 
 namespace Caching.InMemoryCacheTest
 {
